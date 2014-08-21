@@ -1,0 +1,13 @@
+This package contains Matlab and R implementations of the algorithm described in "A community effort to assess and improve drug sensitivity prediction algorithms", which is appearing in Nature Biotechnology.
+
+demo.m file shows how to use the algorithm in Matlab.
+demo.R file shows how to use the algorithm in R.
+
+Bayesian Multitask MKL methods
+------------------------------
+* bayesian_multitask_multiple_kernel_learning_train.m => training procedure in Matlab
+* bayesian_multitask_multiple_kernel_learning_train.R => training procedure in R
+* bayesian_multitask_multiple_kernel_learning_test.m => test procedure in Matlab
+* bayesian_multitask_multiple_kernel_learning_test.R => test procedure in R
+
+If you use the algorithm implemented in this package, please cite the paper at: http://dx.doi.org/10.1038/nbt.2877
