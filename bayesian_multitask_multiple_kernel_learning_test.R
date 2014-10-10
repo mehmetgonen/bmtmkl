@@ -24,5 +24,5 @@ bayesian_multitask_multiple_kernel_learning_test <- function(Km, state) {
     y[[t]]$covariance <- 1 / (state$epsilon$shape[t] * state$epsilon$scale[t]) + diag(crossprod(rbind(matrix(1, 1, N[t]), G[[t]]$mean), state$be$covariance[c(t, (T + 1):(T + P)), c(t, (T + 1):(T + P))]) %*% rbind(matrix(1, 1, N[t]), G[[t]]$mean))
   }
 
-  prediction <- list(y = y)
+  prediction <- list(G = G, y = y)
 }
