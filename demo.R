@@ -56,7 +56,7 @@ for (t in 1:T) {
 state <- bayesian_multitask_multiple_kernel_learning_train(Ktrain, ytrain, parameters)
 
 #display the kernel weights
-print(state$be$mean[(T+1):(T+P)])
+print(state$be$mu[(T+1):(T+P)])
 
 #initialize the kernels of each task for testing
 Ktest <- vector("list", T)
@@ -69,5 +69,5 @@ prediction <- bayesian_multitask_multiple_kernel_learning_test(Ktest, state)
 
 #display the predictions for each task
 for (t in 1:T) {
-  print(prediction$y[[t]]$mean)
+  print(prediction$y[[t]]$mu)
 }

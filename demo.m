@@ -53,7 +53,7 @@ end
 state = bayesian_multitask_multiple_kernel_learning_train(Ktrain, ytrain, parameters);
 
 %display the kernel weights
-display(state.be.mean((T+1):(T+P)));
+display(state.be.mu((T+1):(T+P)));
 
 %initialize the kernels of each task for testing
 Ktest = cell(1, T);
@@ -66,5 +66,5 @@ prediction = bayesian_multitask_multiple_kernel_learning_test(Ktest, state);
 
 %display the predictions for each task
 for t = 1:T
-    display(prediction.y{t}.mean);
+    display(prediction.y{t}.mu);
 end
