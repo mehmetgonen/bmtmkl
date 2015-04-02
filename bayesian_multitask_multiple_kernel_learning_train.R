@@ -128,25 +128,25 @@ bayesian_multitask_multiple_kernel_learning_train <- function(Km, y, parameters)
       lb <- lb + sum((parameters$alpha_upsilon - 1) * (digamma(upsilon$alpha) + log(upsilon$beta)) - upsilon$alpha * upsilon$beta / parameters$beta_upsilon - lgamma(parameters$alpha_upsilon) - parameters$alpha_upsilon * log(parameters$beta_upsilon))
       # p(a | lambda)
       for (t in 1:T) {
-        lb <- lb - 0.5 * sum(diag(diag(as.vector(lambda[[t]]$alpha * lambda[[t]]$beta), D[t], D[t]) %*% atimesaT.mu[[t]])) - 0.5 * (D[t] * log2pi - sum(log(lambda[[t]]$alpha * lambda[[t]]$beta)))
+        lb <- lb - 0.5 * sum(diag(diag(as.vector(lambda[[t]]$alpha * lambda[[t]]$beta), D[t], D[t]) %*% atimesaT.mu[[t]])) - 0.5 * (D[t] * log2pi - sum(digamma(lambda[[t]]$alpha) + log(lambda[[t]]$beta)))
       }
       # p(G | a, Km, upsilon)
       for (t in 1:T) {
-        lb <- lb - 0.5 * sum(diag(GtimesGT.mu[[t]])) * upsilon$alpha[t] * upsilon$beta[t] + crossprod(a[[t]]$mu, KmtimesGT.mu[[t]]) * upsilon$alpha[t] * upsilon$beta[t] - 0.5 * sum(diag(KmKm[[t]] %*% atimesaT.mu[[t]])) * upsilon$alpha[t] * upsilon$beta[t] - 0.5 * N[t] * P * (log2pi - log(upsilon$alpha[t] * upsilon$beta[t]))
+        lb <- lb - 0.5 * sum(diag(GtimesGT.mu[[t]])) * upsilon$alpha[t] * upsilon$beta[t] + crossprod(a[[t]]$mu, KmtimesGT.mu[[t]]) * upsilon$alpha[t] * upsilon$beta[t] - 0.5 * sum(diag(KmKm[[t]] %*% atimesaT.mu[[t]])) * upsilon$alpha[t] * upsilon$beta[t] - 0.5 * N[t] * P * (log2pi - (digamma(upsilon$alpha[t]) + log(upsilon$beta[t])))
       }
       # p(gamma)
       lb <- lb + sum((parameters$alpha_gamma - 1) * (digamma(gamma$alpha) + log(gamma$beta)) - gamma$alpha * gamma$beta / parameters$beta_gamma - lgamma(parameters$alpha_gamma) - parameters$alpha_gamma * log(parameters$beta_gamma))
       # p(b | gamma)
-      lb <- lb - 0.5 * sum(diag(diag(as.vector(gamma$alpha * gamma$beta), T, T) %*% btimesbT.mu)) - 0.5 * (T * log2pi - sum(log(gamma$alpha * gamma$beta)))
+      lb <- lb - 0.5 * sum(diag(diag(as.vector(gamma$alpha * gamma$beta), T, T) %*% btimesbT.mu)) - 0.5 * (T * log2pi - sum(digamma(gamma$alpha) + log(gamma$beta)))
       # p(omega)
       lb <- lb + sum((parameters$alpha_omega - 1) * (digamma(omega$alpha) + log(omega$beta)) - omega$alpha * omega$beta / parameters$beta_omega - lgamma(parameters$alpha_omega) - parameters$alpha_omega * log(parameters$beta_omega))
       # p(e | omega)
-      lb <- lb - 0.5 * sum(diag(diag(as.vector(omega$alpha * omega$beta), P, P) %*% etimeseT.mu)) - 0.5 * (P * log2pi - sum(log(omega$alpha * omega$beta)))
+      lb <- lb - 0.5 * sum(diag(diag(as.vector(omega$alpha * omega$beta), P, P) %*% etimeseT.mu)) - 0.5 * (P * log2pi - sum(digamma(omega$alpha) + log(omega$beta)))
       # p(epsilon)
       lb <- lb + sum((parameters$alpha_epsilon - 1) * (digamma(epsilon$alpha) + log(epsilon$beta)) - epsilon$alpha * epsilon$beta / parameters$beta_epsilon - lgamma(parameters$alpha_epsilon) - parameters$alpha_epsilon * log(parameters$beta_epsilon))
       # p(y | b, e, G, epsilon)
       for (t in 1:T) {
-        lb <- lb - 0.5 * crossprod(y[[t]], y[[t]]) * epsilon$alpha[t] * epsilon$beta[t] + crossprod(y[[t]], crossprod(G[[t]]$mu, be$mu[(T + 1):(T + P)])) * epsilon$alpha[t] * epsilon$beta[t] + sum(be$mu[t] * y[[t]]) * epsilon$alpha[t] * epsilon$beta[t] - 0.5 * sum(diag(etimeseT.mu %*% GtimesGT.mu[[t]])) * epsilon$alpha[t] * epsilon$beta[t] - sum(crossprod(G[[t]]$mu, etimesb.mu[,t])) * epsilon$alpha[t] * epsilon$beta[t] - 0.5 * N[t] * btimesbT.mu[t,t] * epsilon$alpha[t] * epsilon$beta[t] - 0.5 * N[t] * (log2pi - log(epsilon$alpha[t] * epsilon$beta[t]))
+        lb <- lb - 0.5 * crossprod(y[[t]], y[[t]]) * epsilon$alpha[t] * epsilon$beta[t] + crossprod(y[[t]], crossprod(G[[t]]$mu, be$mu[(T + 1):(T + P)])) * epsilon$alpha[t] * epsilon$beta[t] + sum(be$mu[t] * y[[t]]) * epsilon$alpha[t] * epsilon$beta[t] - 0.5 * sum(diag(etimeseT.mu %*% GtimesGT.mu[[t]])) * epsilon$alpha[t] * epsilon$beta[t] - sum(crossprod(G[[t]]$mu, etimesb.mu[,t])) * epsilon$alpha[t] * epsilon$beta[t] - 0.5 * N[t] * btimesbT.mu[t,t] * epsilon$alpha[t] * epsilon$beta[t] - 0.5 * N[t] * (log2pi - (digamma(epsilon$alpha[t]) + log(epsilon$beta[t])))
       }
 
       # q(lambda)
