@@ -1,5 +1,3 @@
-# Mehmet Gonen (mehmet.gonen@gmail.com)
-
 logdet <- function(Sigma) {
     2 * sum(log(diag(chol(Sigma))))
 }

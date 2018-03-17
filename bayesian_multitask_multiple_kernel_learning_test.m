@@ -1,5 +1,3 @@
-% Mehmet Gonen (mehmet.gonen@gmail.com)
-
 function prediction = bayesian_multitask_multiple_kernel_learning_test(Km, state)
     T = length(Km);
     N = zeros(T, 1);

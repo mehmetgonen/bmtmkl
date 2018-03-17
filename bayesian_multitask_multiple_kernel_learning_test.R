@@ -1,5 +1,3 @@
-# Mehmet Gonen (mehmet.gonen@gmail.com)
-
 bayesian_multitask_multiple_kernel_learning_test <- function(Km, state) {
   T <- length(Km)
   N <- matrix(0, T, 1)
